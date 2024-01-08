@@ -26,8 +26,6 @@ router.patch('/:id',(req,res)=>{
 })
 
 
-
-
 router.post('/',(req,res)=>{
     res.json({mssg: `Workout Post function`})
 })
