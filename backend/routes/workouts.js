@@ -1,13 +1,17 @@
 
+const Workout= require('../models/workoutModel')
+
+const {createWorkout,getWorkouts} = require('../controllers/workoutController')
+
 const express=require('express')
 
 const router=express.Router()
 
 //get api for listing out all the objects
-router.get('/',(req,res)=>{
-    console.log(`workout function is working`)
-    res.json({mssg: `workout function is working`})
-})
+router.get('/',getWorkouts)
+//     console.log(`workout function is working`)
+//     res.json({mssg: `workout function is working`})
+// })
 
 //get 
 router.get('/:id',(req,res)=>{
@@ -26,8 +30,17 @@ router.patch('/:id',(req,res)=>{
 })
 
 
-router.post('/',(req,res)=>{
-    res.json({mssg: `Workout Post function`})
+router.post('/',async(req,res)=>{ 
+    const {title,load,reps}= req.body
+
+    try{
+        const workout = await Workout.create({title,load,reps})
+        res.status(200).json(workout)
+    }
+    catch(error){ 
+        res.status(400).json(error.message)
+    }
+    
 })
 
 module.exports = router
